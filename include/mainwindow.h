@@ -82,6 +82,12 @@ class MainWindow : public QMainWindow
         void on_actionNew_triggered();
         void get_user_dimension();
         void add_viewer(int horiz, int vert);
+
+        void selectFrameSlot(int frame);
+
+        void deleteFrameSlot(int frame);
+
+        void insertFrameSlot(int frame);
 };
 
 #endif // MAINWINDOW_H

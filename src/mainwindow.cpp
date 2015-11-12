@@ -46,6 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->setCentralWidget(mainSplit);
     this->show();
 
+    connect(timelineWidget, &TimelineWidget::selectFrame, this, &MainWindow::selectFrameSlot);
+    connect(timelineWidget, &TimelineWidget::deleteFrame, this, &MainWindow::deleteFrameSlot);
+    connect(timelineWidget, &TimelineWidget::insertFrame, this, &MainWindow::insertFrameSlot);
 
     newBuffer(std::make_shared<Buffer>(128, 128, Qt::cyan));
 }
@@ -58,8 +61,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::newBuffer(std::shared_ptr<Buffer> buffer)
 {
+    // Change the buffer in the windows.
     this->buffer = buffer;
     previewWidget->changeBuffer(buffer);
+    canvasWidget->changeBuffer(buffer);
     timelineWidget->updateBuffer(buffer);
 }
 
@@ -265,4 +270,28 @@ void MainWindow::get_user_dimension()
 
 void MainWindow::add_viewer(int width, int height){
     MainWindow::newBuffer(std::make_shared<Buffer>(width, height, QColor(0, 0, 0, 255)));
+}
+
+void MainWindow::selectFrameSlot(int frame)
+{
+    canvasWidget->showFrame(frame);
+    timelineWidget->updateBuffer(this->buffer);
+}
+
+void MainWindow::deleteFrameSlot(int frame)
+{
+    buffer->deleteFrame(frame);
+
+    previewWidget->changeBuffer(buffer);
+    canvasWidget->changeBuffer(buffer);
+    timelineWidget->updateBuffer(buffer);
+}
+
+void MainWindow::insertFrameSlot(int frame)
+{
+    buffer->insertFrame(frame);
+
+    previewWidget->changeBuffer(buffer);
+    canvasWidget->changeBuffer(buffer);
+    timelineWidget->updateBuffer(buffer);
 }

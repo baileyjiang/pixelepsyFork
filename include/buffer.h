@@ -20,6 +20,8 @@ class Buffer
 
         QString toString();
 
+        void insertFrame(int index);
+        void deleteFrame(int index);
 };
 
 #endif // BUFFER_H

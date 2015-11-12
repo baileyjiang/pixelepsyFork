@@ -11,6 +11,12 @@ Buffer::Buffer(int width, int height, QColor background)
 {
     frames.push_back(std::make_shared<QImage>(width, height, QImage::Format_ARGB32));
     frames.back()->fill(background);
+
+    frames.push_back(std::make_shared<QImage>(width, height, QImage::Format_ARGB32));
+    frames.back()->fill(Qt::red);
+
+    frames.push_back(std::make_shared<QImage>(width, height, QImage::Format_ARGB32));
+    frames.back()->fill(Qt::blue);
 }
 
 std::vector<std::shared_ptr<QImage>> Buffer::fetchSnapshot()
@@ -28,7 +34,13 @@ std::shared_ptr<QImage> Buffer::fetchFrame(int index)
     // Guard against high numbers
     index = std::min(index, (int) frames.size() - 1);
 
-    frames.at(index);
+    return frames.at(index);
+}
+
+void Buffer::insertFrame(int index)
+{
+    frames.insert(frames.begin() + index + 1,
+                  std::make_shared<QImage>(*fetchFrame(index)));
 }
 
 QString Buffer::toString() {
@@ -64,4 +76,10 @@ QString Buffer::toString() {
 
 
 
+}
+void Buffer::deleteFrame(int index)
+{
+    if (frames.size() >= 2) {
+        frames.erase(frames.begin() + index);
+    }
 }
