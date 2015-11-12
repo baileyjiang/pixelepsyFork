@@ -45,6 +45,12 @@ class MainWindow : public QMainWindow
 
     public slots:
         void useTool(int x, int y);
+
+        void selectFrameSlot(int frame);
+
+        void deleteFrameSlot(int frame);
+
+        void insertFrameSlot(int frame);
 };
 
 #endif // MAINWINDOW_H

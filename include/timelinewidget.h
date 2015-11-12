@@ -5,7 +5,7 @@
 
 #include <memory>
 
-#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QWidget>
@@ -14,7 +14,10 @@ class TimelineWidget : public QWidget
 {
         Q_OBJECT
 
-        QHBoxLayout *layout;
+        QVBoxLayout *layout;
+
+        QPushButton *addFrame;
+        QPushButton *removeFrame;
 
         std::vector<std::shared_ptr<QPushButton>> buttons;
 
@@ -31,8 +34,16 @@ class TimelineWidget : public QWidget
     signals:
         void selectFrame(int frame);
 
+        void deleteFrame(int frame);
+
+        void insertFrame(int frame);
+
     public slots:
         void selectFrameSlot(int frame);
+
+        void deleteFrameSlot(int frame);
+
+        void insertFrameSlot(int frame);
 };
 
 #endif // TIMELINE_H

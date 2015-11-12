@@ -17,6 +17,9 @@ class Buffer
         std::vector<std::shared_ptr<QImage>> fetchSnapshot();
 
         std::shared_ptr<QImage> fetchFrame(int index);
+
+        void insertFrame(int index);
+        void deleteFrame(int index);
 };
 
 #endif // BUFFER_H
