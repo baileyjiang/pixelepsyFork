@@ -1,6 +1,13 @@
 #include "canvaswidget.h"
 #include <QPoint>
 #include <QTextStream>
+#include <QMouseEvent>
+#include <QGraphicsView>
+#include <QVBoxLayout>
+#include <QPixmap>
+#include <Qt>
+#include <QPointF>
+#include <QPoint>
 
 CanvasWidget::CanvasWidget(QWidget *parent)
     : QGraphicsView(parent)
