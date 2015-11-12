@@ -8,18 +8,20 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QLabel>
+#include <QMouseEvent>
 #include <QPixmap>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QPoint>
 
-class CanvasWidget : public QWidget
+
+class CanvasWidget : public QGraphicsView
 {
         Q_OBJECT
 
         std::shared_ptr<Buffer> buffer;
-
         QGraphicsScene *scene;
-        QGraphicsView *view;
+        //QGraphicsView *view;
 
         QVBoxLayout *layout;
 
@@ -32,9 +34,14 @@ class CanvasWidget : public QWidget
         void showFrame(int frame);
 
         void changeBuffer(std::shared_ptr<Buffer> buffer);
+        void mouseMoveEvent(QMouseEvent*);
+        void mousePressEvent(QMouseEvent *);
+        void mouseReleaseEvent(QMouseEvent *);
+        QPoint pixelLocation(QMouseEvent*);
+        bool checkPoint(QPoint);
 
     signals:
-
+        void pointSelected(QPoint point, bool leftMouseButton);
     public slots:
 };
 
