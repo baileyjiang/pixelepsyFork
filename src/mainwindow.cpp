@@ -120,17 +120,21 @@ void MainWindow::on_actionOpen_triggered()
             int red, green, blue, alpha;
             Buffer* buffer = new Buffer(width, height, QColor(0, 0, 0, 255));
             for (int frame = 0; frame < frames; frame++) {
-                if (frame)
+                if (frame) {
                     //buffer->current()->addFrame();
-                for (int x = 0; x < width; x++) {
-                    for (int y = 0; y < height; y++) {
-                        fileStream >> red >> green >> blue >> alpha;
-                        QRgb value = qRgba(red, green, blue, alpha);
-                        buffer->fetchFrame(frame)->setPixel(x, y, value);
-                    }
+                    QImage img(width, height, QImage::Format_ARGB32);
+
+                     for (int x = 0; x < width; x++) {
+                         for (int y = 0; y < height; y++) {
+                             fileStream >> red >> green >> blue >> alpha;
+                             QRgb value = qRgba(red, green, blue, alpha);
+                             img.setPixel(x, y, value);
+                         }
+                     }
+                     buffer->insertFrame(img);
                 }
             }
-            MainWindow::newBuffer(std::make_shared<Buffer>(buffer));
+            MainWindow::newBuffer(std::make_shared<Buffer>(*buffer));
         }
     }
 }

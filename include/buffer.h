@@ -6,6 +6,9 @@
 
 #include <QColor>
 #include <QImage>
+#include <sstream>
+#define SPACE " "
+#define NEWLINE '\n'
 
 class Buffer
 {
@@ -21,7 +24,9 @@ class Buffer
         QString toString();
 
         void insertFrame(int index);
+        void insertFrame(QImage);
         void deleteFrame(int index);
+        std::vector<std::shared_ptr<QImage>> getFrames();
 };
 
 #endif // BUFFER_H

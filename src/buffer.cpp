@@ -42,23 +42,25 @@ void Buffer::insertFrame(int index)
     frames.insert(frames.begin() + index + 1,
                   std::make_shared<QImage>(*fetchFrame(index)));
 }
+void Buffer::insertFrame(QImage image) {
+    frames.insert(frames.end() + 1,
+                  std::make_shared<QImage>(image));
+}
 
 QString Buffer::toString() {
     std::stringstream stream;
-    stream << this->current()->getHeight() << SPACE
-           << this->current()->getWidth() << SPACE
+    stream << this->fetchFrame(0)->height() << SPACE
+           << this->fetchFrame(0)->width() << SPACE
            << NEWLINE;
 
 
-    stream << this->current()->getFrames().size() << NEWLINE;
+    stream << this->getFrames().size() << NEWLINE;
 
-    for (Frame frame : this->current()->getFrames()) {
-        for (auto layer = frame.getLayersBegin(); layer != frame.getLayersEnd(); layer++)
-        {
-            QImage image = *((*layer).get());
-            for (int i = 0; i < image.height(); i++) {
-                for (int j = 0; j < image.width(); j++) {
-                    QColor color = image.pixel(j, i);
+    for (std::shared_ptr<QImage> frame : this->getFrames()) {
+        QImage* image = frame.get();
+        for (int i = 0; i < image->height(); i++) {
+                for (int j = 0; j < image->width(); j++) {
+                    QColor color = image->pixel(j, i);
                     stream << color.red() << SPACE
                            << color.green() << SPACE
                            << color.blue() << SPACE
@@ -66,7 +68,6 @@ QString Buffer::toString() {
                 }
                 stream << NEWLINE;
             }
-        }
     }
 
 
@@ -82,4 +83,7 @@ void Buffer::deleteFrame(int index)
     if (frames.size() >= 2) {
         frames.erase(frames.begin() + index);
     }
+}
+std::vector<std::shared_ptr<QImage>> Buffer::getFrames() {
+    return frames;
 }
