@@ -8,14 +8,22 @@ PreviewWidget::PreviewWidget(QWidget *parent)
     , frame(0)
     , scale(1)
     , timer(new QTimer)
+    , rate(new QSlider)
 {
     view->setScene(scene);
     layout->addWidget(view);
     this->setLayout(layout);
 
-    connect(timer, &QTimer::timeout, this, &PreviewWidget::nextFrame);
-    timer->start(66);
+    rate->setMinimum(1);
+    rate->setMaximum(100);
+    rate->setValue(15);
+    rate->setOrientation(Qt::Horizontal);
+    layout->addWidget(rate);
 
+    connect(timer, &QTimer::timeout, this, &PreviewWidget::nextFrame);
+    connect(rate, &QSlider::sliderMoved, this, &PreviewWidget::setRate);
+
+    timer->start(1000.0 / rate->value());
 }
 
 void PreviewWidget::changeBuffer(std::shared_ptr<Buffer> buffer) {
@@ -39,4 +47,8 @@ void PreviewWidget::nextFrame() {
     scene->addPixmap(QPixmap::fromImage(*(frames.at(frame).get())));
 
     frame++;
+}
+
+void PreviewWidget::setRate(int fps) {
+    timer->start(1000.0 / fps);
 }

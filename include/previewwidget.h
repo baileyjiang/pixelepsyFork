@@ -10,6 +10,7 @@
 #include <QGraphicsView>
 #include <QLabel>
 #include <QPixmap>
+#include <QSlider>
 #include <QTimer>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -30,6 +31,8 @@ class PreviewWidget : public QWidget
 
         QTimer *timer;
 
+        QSlider *rate;
+
 
     public:
         explicit PreviewWidget(QWidget *parent = 0);
@@ -40,6 +43,7 @@ class PreviewWidget : public QWidget
 
     public slots:
         void nextFrame();
+        void setRate(int rate);
 };
 
 #endif // PREVIEW_H

@@ -58,7 +58,7 @@ QString Buffer::toString() {
         QImage* image = frame.get();
         for (int i = 0; i < image->height(); i++) {
                 for (int j = 0; j < image->width(); j++) {
-                    QColor color = image->pixel(j, i);
+                    QColor color = image->pixel(i, j);
                     stream << color.red() << SPACE
                            << color.green() << SPACE
                            << color.blue() << SPACE
