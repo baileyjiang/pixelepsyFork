@@ -1,15 +1,15 @@
 #include "canvaswidget.h"
+#include <QPoint>
+#include <QTextStream>
 
 CanvasWidget::CanvasWidget(QWidget *parent)
-    : QWidget(parent)
+    : QGraphicsView(parent)
     , scene(new QGraphicsScene)
-    , view(new QGraphicsView)
     , layout(new QVBoxLayout)
     , frame(0)
     , scale(1)
 {
-    view->setScene(scene);
-    layout->addWidget(view);
+    this->setScene(scene);
     this->setLayout(layout);
 }
 
@@ -29,3 +29,34 @@ void CanvasWidget::changeBuffer(std::shared_ptr<Buffer> buffer) {
     scene->addPixmap(QPixmap::fromImage(
                          *(this->buffer->fetchSnapshot().front().get())));
 }
+
+
+void CanvasWidget::mouseMoveEvent(QMouseEvent * event) {
+    QPoint point = this->pixelLocation(event);
+
+    if (checkPoint(point))
+    {
+        emit this->pointSelected(point, event->button() == Qt::LeftButton);
+    }
+}
+
+void CanvasWidget::mousePressEvent(QMouseEvent * event) {
+}
+
+void CanvasWidget::mouseReleaseEvent(QMouseEvent* event) {
+
+}
+
+QPoint CanvasWidget::pixelLocation(QMouseEvent * event) {
+    QPointF point = this->mapToScene(event->pos());
+    return point.toPoint();
+}
+
+bool CanvasWidget::checkPoint(QPoint point) {
+    int x = point.x();
+    int y = point.y();
+    int width = this->buffer->fetchFrame(0)->width();
+    int height = this->buffer->fetchFrame(0)->height();
+    return ((x >= 0) && (y >= 0)) && ((x < width) && (y < height));
+}
+
