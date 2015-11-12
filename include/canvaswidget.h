@@ -34,6 +34,7 @@ class CanvasWidget : public QGraphicsView
         void showFrame(int frame);
 
         void changeBuffer(std::shared_ptr<Buffer> buffer);
+        void updateBuffer(std::shared_ptr<Buffer> buffer, int frame);
         void mouseMoveEvent(QMouseEvent*);
         void mousePressEvent(QMouseEvent *);
         void mouseReleaseEvent(QMouseEvent *);
