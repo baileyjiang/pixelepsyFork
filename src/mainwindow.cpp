@@ -78,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timelineWidget, &TimelineWidget::deleteFrame, this, &MainWindow::deleteFrameSlot);
     connect(timelineWidget, &TimelineWidget::insertFrame, this, &MainWindow::insertFrameSlot);
 
+    connect(canvasWidget, &CanvasWidget::pointSelected, this, &MainWindow::pointSelectedSlot);
+
     newBuffer(std::make_shared<Buffer>(128, 128, Qt::cyan));
 }
 
@@ -325,5 +327,23 @@ void MainWindow::insertFrameSlot(int frame)
 
     previewWidget->changeBuffer(buffer);
     canvasWidget->changeBuffer(buffer);
+    timelineWidget->updateBuffer(buffer);
+}
+
+void MainWindow::pointSelectedSlot(QPoint point, bool isLeft)
+{
+    std::shared_ptr<QImage> frame = buffer->fetchFrame(timelineWidget->getFrameIndex());
+
+    QColor color = isLeft ? toolsWidget->getForeground()
+                          : toolsWidget->getBackground();
+
+
+    frame->setPixel(point, color.rgba());
+
+
+
+
+    previewWidget->changeBuffer(buffer);
+    canvasWidget->updateBuffer(buffer, timelineWidget->getFrameIndex());
     timelineWidget->updateBuffer(buffer);
 }

@@ -37,13 +37,21 @@ void CanvasWidget::changeBuffer(std::shared_ptr<Buffer> buffer) {
                          *(this->buffer->fetchSnapshot().front().get())));
 }
 
+void CanvasWidget::updateBuffer(std::shared_ptr<Buffer> buffer, int frame) {
+    this->buffer = buffer;
+
+    scene->clear();
+    scene->addPixmap(QPixmap::fromImage(
+                         *(this->buffer->fetchSnapshot().at(frame).get())));
+}
+
 
 void CanvasWidget::mouseMoveEvent(QMouseEvent * event) {
     QPoint point = this->pixelLocation(event);
 
     if (checkPoint(point))
     {
-        emit this->pointSelected(point, event->button() == Qt::LeftButton);
+        emit this->pointSelected(point, event->buttons() == Qt::LeftButton);
     }
 }
 

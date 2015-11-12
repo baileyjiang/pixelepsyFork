@@ -9,6 +9,7 @@
 #include "timelinewidget.h"
 
 #include <QMainWindow>
+#include <QPoint>
 #include <QSplitter>
 #include <QVBoxLayout>
 #include <QMenuBar>
@@ -88,6 +89,9 @@ class MainWindow : public QMainWindow
         void deleteFrameSlot(int frame);
 
         void insertFrameSlot(int frame);
+
+        void pointSelectedSlot(QPoint point, bool isLeft);
+
 };
 
 #endif // MAINWINDOW_H
