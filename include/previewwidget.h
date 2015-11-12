@@ -5,10 +5,12 @@
 
 #include <memory>
 
+#include <QDebug>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QLabel>
 #include <QPixmap>
+#include <QTimer>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -26,6 +28,9 @@ class PreviewWidget : public QWidget
         int frame;
         int scale;
 
+        QTimer *timer;
+
+
     public:
         explicit PreviewWidget(QWidget *parent = 0);
 
@@ -34,7 +39,7 @@ class PreviewWidget : public QWidget
     signals:
 
     public slots:
-        // void nextFrame();
+        void nextFrame();
 };
 
 #endif // PREVIEW_H
