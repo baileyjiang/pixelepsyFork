@@ -26,7 +26,7 @@ class CanvasWidget : public QGraphicsView
         QVBoxLayout *layout;
 
         int frame;
-        int scale;
+        int scala;
 
     public:
         explicit CanvasWidget(QWidget *parent = 0);
