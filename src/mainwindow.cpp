@@ -28,6 +28,8 @@
 #include <QRgb>
 
 
+#include <QList>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , mainSplit(new QSplitter)
@@ -52,7 +54,14 @@ MainWindow::MainWindow(QWidget *parent)
     canvasToolsSplit->addWidget(toolsWidget);
     canvasToolsSplit->addWidget(canvasWidget);
 
+    QList<int> sizes;
+    sizes << 100 << 600;
+
+    canvasToolsSplit->setSizes(sizes);
+
     canvasToolsLayout->addWidget(canvasToolsSplit);
+
+
     canvasToolsContainer->setLayout(canvasToolsLayout);
 
 
@@ -80,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(canvasWidget, &CanvasWidget::pointSelected, this, &MainWindow::pointSelectedSlot);
 
-    newBuffer(std::make_shared<Buffer>(128, 128, Qt::cyan));
+    newBuffer(std::make_shared<Buffer>(128, 128, Qt::white));
 }
 
 MainWindow::~MainWindow()
