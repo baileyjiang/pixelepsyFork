@@ -7,12 +7,14 @@ CanvasWidget::CanvasWidget(QWidget *parent)
     , scene(new QGraphicsScene)
     , layout(new QVBoxLayout)
     , frame(0)
-    , scale(1)
+    , scala(2)
 {
     this->setScene(scene);
     this->setLayout(layout);
 
     this->setStyleSheet("background: grey;");
+
+    this->scale(scala, scala);
 }
 
 

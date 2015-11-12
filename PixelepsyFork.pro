@@ -33,3 +33,9 @@ HEADERS += include/mainwindow.h \
            include/timelinewidget.h \
     include/colorpicker.h \
     include/tool.h
+
+DISTFILES += \
+    logo.png
+
+RESOURCES += \
+    logo.qrc
