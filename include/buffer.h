@@ -16,6 +16,7 @@ class Buffer
 
     public:
         Buffer(int width, int height, QColor background);
+        Buffer(std::vector<std::shared_ptr<QImage>> images);
 
         std::vector<std::shared_ptr<QImage>> fetchSnapshot();
 

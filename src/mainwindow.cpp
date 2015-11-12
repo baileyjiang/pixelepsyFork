@@ -1,4 +1,32 @@
 #include "mainwindow.h"
+#include "buffer.h"
+#include "timelinewidget.h"
+#include "previewwidget.h"
+#include "canvaswidget.h"
+
+#include <memory>
+#include <vector>
+
+#include <QImage>
+#include <QTextStream>
+#include <QSplitter>
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QSplitter>
+#include <QMainWindow>
+#include <QMenuBar>
+#include <QMenu>
+#include <QShortcut>
+#include <QAction>
+#include <QMessageBox>
+#include <QFile>
+#include <QString>
+#include <QInputDialog>
+#include <QIODevice>
+#include <QColor>
+#include <QKeySequence>
+#include <QRgb>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -118,23 +146,23 @@ void MainWindow::on_actionOpen_triggered()
             fileStream >> width >> height;
             fileStream >> frames;
             int red, green, blue, alpha;
-            Buffer* buffer = new Buffer(width, height, QColor(0, 0, 0, 255));
+            //Buffer* buffer = new Buffer(width, height, QColor(0, 0, 0, 255));
+            std::vector<std::shared_ptr<QImage>> images;
             for (int frame = 0; frame < frames; frame++) {
-                if (frame) {
                     //buffer->current()->addFrame();
-                    QImage img(width, height, QImage::Format_ARGB32);
+                    std::shared_ptr<QImage> img = std::make_shared<QImage>(width, height, QImage::Format_ARGB32);
 
                      for (int x = 0; x < width; x++) {
                          for (int y = 0; y < height; y++) {
                              fileStream >> red >> green >> blue >> alpha;
                              QRgb value = qRgba(red, green, blue, alpha);
-                             img.setPixel(x, y, value);
+                             img->setPixel(x, y, value);
                          }
                      }
-                     buffer->insertFrame(img);
-                }
+                     images.push_back(img);
             }
-            MainWindow::newBuffer(std::make_shared<Buffer>(*buffer));
+
+            this->newBuffer(std::make_shared<Buffer>(images));
         }
     }
 }
@@ -273,7 +301,7 @@ void MainWindow::get_user_dimension()
 }
 
 void MainWindow::add_viewer(int width, int height){
-    MainWindow::newBuffer(std::make_shared<Buffer>(width, height, QColor(0, 0, 0, 255)));
+    this->newBuffer(std::make_shared<Buffer>(width, height, QColor(0, 0, 0, 255)));
 }
 
 void MainWindow::selectFrameSlot(int frame)

@@ -19,6 +19,10 @@ Buffer::Buffer(int width, int height, QColor background)
     frames.back()->fill(Qt::blue);
 }
 
+Buffer::Buffer(std::vector<std::shared_ptr<QImage> > images) {
+    this->frames = images;
+}
+
 std::vector<std::shared_ptr<QImage>> Buffer::fetchSnapshot()
 {
     std::vector<std::shared_ptr<QImage>> snapshot;
