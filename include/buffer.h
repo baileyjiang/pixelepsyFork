@@ -18,6 +18,8 @@ class Buffer
 
         std::shared_ptr<QImage> fetchFrame(int index);
 
+        QString toString();
+
         void insertFrame(int index);
         void deleteFrame(int index);
 };
