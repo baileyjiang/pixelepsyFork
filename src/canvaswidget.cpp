@@ -11,6 +11,8 @@ CanvasWidget::CanvasWidget(QWidget *parent)
 {
     this->setScene(scene);
     this->setLayout(layout);
+
+    this->setStyleSheet("background: grey;");
 }
 
 

@@ -11,12 +11,6 @@ Buffer::Buffer(int width, int height, QColor background)
 {
     frames.push_back(std::make_shared<QImage>(width, height, QImage::Format_ARGB32));
     frames.back()->fill(background);
-
-    frames.push_back(std::make_shared<QImage>(width, height, QImage::Format_ARGB32));
-    frames.back()->fill(Qt::red);
-
-    frames.push_back(std::make_shared<QImage>(width, height, QImage::Format_ARGB32));
-    frames.back()->fill(Qt::blue);
 }
 
 std::vector<std::shared_ptr<QImage>> Buffer::fetchSnapshot()
