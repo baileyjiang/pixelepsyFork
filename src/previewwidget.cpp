@@ -31,7 +31,6 @@ void PreviewWidget::changeBuffer(std::shared_ptr<Buffer> buffer) {
 
 void PreviewWidget::nextFrame() {
     auto frames = this->buffer->fetchSnapshot();
-    qDebug() << frame << "\n" << frames.size();
     if (frame >= (int) frames.size()) {
         frame = 0;
     }
